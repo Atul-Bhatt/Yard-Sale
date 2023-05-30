@@ -1,6 +1,7 @@
 mod api;
+mod model;
 
-use crate::api::health_check::health;
+use crate::api::home::health;
 
 use actix_web::{HttpServer, App, web::Data, middleware::Logger};
 
