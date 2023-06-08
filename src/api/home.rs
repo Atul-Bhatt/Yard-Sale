@@ -10,6 +10,7 @@ use crate::{
 use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
 use chrono::prelude::*;
 use serde_json::json;
+use sqlx::postgres::PgRow;
 
 #[get("/health_check")]
 async fn health() -> impl Responder {
@@ -24,30 +25,31 @@ async fn create_account(
 ) -> impl Responder {
     let query_result = sqlx::query_as!(
         Account,
-        "INSERT INTO accounts (email,password) VALUES ($1, $2)",
-        body.email.to_string(),
-        body.password.to_string()
+        "INSERT INTO accounts (email, password) VALUES ($1, $2)",
+        body.email,
+        &[body.password.to_owned()]
     )
     .fetch_one(&data.db)
     .await;
 
-    match query_result {
-        Ok(account) => {
-            let account_response = serde_json::json!({"status": "success", "data": serde_json::json!({
-                "account": account
-            })});
-            return HttpResponse::Ok().json(account_response);
-        }
-        Err(e) => {
-            if e.to_string()
-                .contains("duplicate key value violates unique constraint")
-            {
-                return HttpResponse::BadRequest()
-                .json(serde_json::json!({"status": "fail", "message": "Account with that email already exists."}));
-            }
+    // match query_result {
+    //     Ok(account) => {
+    //         let account_response = serde_json::json!({"status": "success", "data": serde_json::json!({
+    //             "account": <PgRow as Into<Account>>::into(account)
+    //         })});
+    //         return HttpResponse::Ok().json(account_response);
+    //     }
+    //     Err(e) => {
+    //         if e.to_string()
+    //             .contains("duplicate key value violates unique constraint")
+    //         {
+    //             return HttpResponse::BadRequest()
+    //             .json(serde_json::json!({"status": "fail", "message": "Account with that email already exists."}));
+    //         }
 
-            return HttpResponse::InternalServerError()
-                .json(serde_json::json!({"status": "error", "message": format!("{:?}", e)}));
-        }
-    }
+    //         return HttpResponse::InternalServerError()
+    //             .json(serde_json::json!({"status": "error", "message": format!("{:?}", e)}));
+    //     }
+    // }
+    HttpResponse::Ok()
 }
