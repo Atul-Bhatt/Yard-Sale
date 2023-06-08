@@ -15,3 +15,6 @@ chrono = "0.4.25"
 serde_json = "1.0.96"
 sqlx = {version = "0.6.2", features = ["runtime-async-std-native-tls", "postgres", "chrono", "uuid"]}
 dotenv = "0.15.0"
+actix-web-httpauth = "0.8.0"
+alcoholic_jwt = "4091.0.0"
+derive_more = "0.99.17"
