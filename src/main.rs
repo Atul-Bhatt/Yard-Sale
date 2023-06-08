@@ -1,5 +1,6 @@
 mod api;
 mod model;
+mod repository;
 
 use crate::api::home::health;
 

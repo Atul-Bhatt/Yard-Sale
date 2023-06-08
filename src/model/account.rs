@@ -1,8 +1,8 @@
 use serde::{Serialize, Deserialize};
+use sqlx::FromRow;
 
-#[derive(Serialize, Deserialize, Default)]
+#[derive(Serialize, Deserialize, Default, FromRow)]
 pub struct Account {
-    id: String,
-    email: String,
-    password: String,
+    pub email: String,
+    pub password: String,
 }
