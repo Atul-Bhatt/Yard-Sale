@@ -4,8 +4,7 @@ mod repository;
 
 use crate::api::home::{create_account, health};
 
-use actix_web::{dev::ServiceRequest, middleware::Logger, web, App, HttpServer};
-use actix_web_httpauth::middleware::HttpAuthentication;
+use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenv::dotenv;
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 

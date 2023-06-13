@@ -1,16 +1,10 @@
 use crate::{
-    model::{
-        listing::Listing,
-        account::Account,
-    },
     repository::create_account::CreateAccountSchema,
     AppState
 };
 
-use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
-use chrono::prelude::*;
+use actix_web::{ get, post, web, HttpResponse, Responder};
 use serde_json::json;
-use sqlx::postgres::PgRow;
 
 #[get("/health_check")]
 async fn health() -> impl Responder {
