@@ -32,24 +32,5 @@ async fn create_account(
     .fetch_one(&data.db)
     .await;
 
-    // match query_result {
-    //     Ok(account) => {
-    //         let account_response = serde_json::json!({"status": "success", "data": serde_json::json!({
-    //             "account": <PgRow as Into<Account>>::into(account)
-    //         })});
-    //         return HttpResponse::Ok().json(account_response);
-    //     }
-    //     Err(e) => {
-    //         if e.to_string()
-    //             .contains("duplicate key value violates unique constraint")
-    //         {
-    //             return HttpResponse::BadRequest()
-    //             .json(serde_json::json!({"status": "fail", "message": "Account with that email already exists."}));
-    //         }
-
-    //         return HttpResponse::InternalServerError()
-    //             .json(serde_json::json!({"status": "error", "message": format!("{:?}", e)}));
-    //     }
-    // }
     HttpResponse::Ok()
 }
