@@ -2,7 +2,8 @@ mod api;
 mod model;
 mod repository;
 
-use crate::api::home::{create_account, health};
+use crate::api::home::health;
+use crate::api::auth::register::create_account;
 
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenv::dotenv;
@@ -45,7 +46,7 @@ async fn main() -> std::io::Result<()> {
             .service(health)
             .service(create_account)
     })
-    .bind(("127.0.0.1", 80))?
+    .bind(("127.0.0.1", 8000))?
     .run()
     .await
 }
