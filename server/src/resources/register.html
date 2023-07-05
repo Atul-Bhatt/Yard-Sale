@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Yard Sale Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;400&display=swap" rel="stylesheet">
+    <!-- <link th:href="@{../css/register.css}" rel="stylesheet"> -->
+    <style>
+        * {
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .register-side-art {
+            height: 100vh;
+            width: 156px;
+        }
+
+        .register-form-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            margin-left: 30px;
+            width: 280px;
+        }
+
+        .register-form-container h1 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 20px;
+        }
+
+        .register-form-container p {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 12px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        .user-pass-input {
+            margin-bottom: 10px;
+            border: 1px solid gray;
+            border-radius: 4px;
+            width: 100%;
+            height: 32px;
+            padding: 10px;
+        }
+
+        .continue-button {
+            background-color: #0079d3;
+            color: white;
+            width: 100%;
+            height: 32px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            margin-bottom: 16px;
+            border: 0;
+            border-radius: 4px;
+        }
+
+        .continue-button:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img alt="register side art" class="register-side-art" src="https://www.redditstatic.com/accountmanager/bbb584033aa89e39bad69436c504c9bd.png">
+    <div class="register-form-container">
+        <h1>Sign Up</h1>
+        <p>By continuing, you are setting up a YardSale Account. We don't have any User Agreement or Privacy Policy.</p>
+        <form action="#" th:action="@{/register}" th:object="${userData}" method="post">
+            <input class="user-pass-input" placeholder="Username" th:field="*{username}"/>
+            <input class="user-pass-input" placeholder="Password" th:field="*{password}"/>
+            <button type="submit" class="continue-button"> Continue </button>
+        </form>
+        <div class="bottom-login">
+            "Already a needassistor?"
+            <a href="/login">Login</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

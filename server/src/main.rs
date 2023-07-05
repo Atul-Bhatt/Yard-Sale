@@ -3,7 +3,7 @@ mod model;
 mod repository;
 
 use crate::api::home::health;
-use crate::api::auth::register::create_account;
+use crate::api::auth::register;
 
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenv::dotenv;
@@ -44,7 +44,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(AppState { db: pool.clone() }))
             .wrap(logger)
             .service(health)
-            .service(create_account)
+            .configure(register::config)
     })
     .bind(("127.0.0.1", 8000))?
     .run()

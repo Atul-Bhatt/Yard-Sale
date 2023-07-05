@@ -6,6 +6,14 @@ use crate::{
 use actix_web::{ get, post, web, HttpResponse, Responder};
 use serde_json::json;
 
+
+#[get("/signup")]
+async fn sign_up_page() -> impl Responder {
+    HttpResponse::Ok().body(include_str!("../../resources/register.html"))
+}
+
+
+/// Register user using username and password
 #[post("/signup")]
 async fn create_account(
     body: web::Json<CreateAccountSchema>,
@@ -21,4 +29,10 @@ async fn create_account(
     .await;
 
     HttpResponse::Ok()
+}
+
+pub fn config(conf: &mut web::ServiceConfig) {
+    conf.service(web::scope("")
+        .service(sign_up_page)
+        .service(create_account));
 }
