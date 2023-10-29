@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
     <title>Yard Sale Register</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,9 +75,9 @@
     <div class="register-form-container">
         <h1>Sign Up</h1>
         <p>By continuing, you are setting up a YardSale Account. We don't have any User Agreement or Privacy Policy.</p>
-        <form action="#" th:action="@{/register}" th:object="${userData}" method="post">
-            <input class="user-pass-input" placeholder="Username" th:field="*{username}"/>
-            <input class="user-pass-input" placeholder="Password" th:field="*{password}"/>
+        <form action="/signup" method="post">
+            <input class="user-pass-input" placeholder="Username" type="text"/>
+            <input class="user-pass-input" placeholder="Password" type="password"/>
             <button type="submit" class="continue-button"> Continue </button>
         </form>
         <div class="bottom-login">
