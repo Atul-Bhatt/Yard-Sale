@@ -15,6 +15,30 @@ struct ChatServer {
     subscriber: broadcast::Sender<String>,
 }
 
+impl ChatServer {
+    async fn new() -> Self {
+        let (tx, _rx) = broadcast::channel(32);
+        ChatServer {
+            clients: Arc::new(tokio::sync::Mutex::new(HashMap::new())),
+            subscriber: tx,
+        }
+    }
+}
+
+impl ChatServer {
+    async fn join(&self, id: usize, client: actix::Addr<ChatClient>) {
+        self.clients.lock().await.insert(id, client);
+    }
+
+    async fn leave(&self, id: usize) {
+        self.clients.lock().await.remove(&id);
+    }
+
+    async fn send_message(&self, msg: &str) {
+        self.subscriber.send(msg.to_owned()).ok();
+    }
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let server = ChatServer::new().await;
