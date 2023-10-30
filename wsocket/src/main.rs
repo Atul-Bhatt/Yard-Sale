@@ -39,6 +39,23 @@ impl ChatServer {
     }
 }
 
+struct WsChatSession {
+    id: usize,
+    server: actix::Addr<ChatServer>,
+    hb: actix::clock::Instant,
+}
+
+impl WsChatSession {
+    async fn new(id: usize, server: actix::Addr<ChatServer>, ws: web::WsWriter) -> Self {
+        WsChatSession {
+            id,
+            server,
+            hb: actix::clock::now(),
+        }
+        .subscribe_ws(id, ws)
+    }
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let server = ChatServer::new().await;
