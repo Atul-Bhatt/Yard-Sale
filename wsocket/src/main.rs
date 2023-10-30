@@ -54,6 +54,18 @@ impl WsChatSession {
         }
         .subscribe_ws(id, ws)
     }
+
+    fn subscribe_ws(self, id: usize, ws: web::WsWriter) -> Self {
+        let addr = Self::create(|ctx| {
+            let (response, mut framed) = accept_async(ws, ctx.req.head()).unwrap();
+            ctx.add_stream(framed);
+
+            WsChatSession::new(id, ctx.address(), framed)
+        });
+
+        self.server.send(ChatClientMessage::new(id, addr)).ok();
+        self
+    }
 }
 
 #[actix_web::main]
